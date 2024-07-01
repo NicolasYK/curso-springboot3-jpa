@@ -9,21 +9,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
+// Reconhecer e definir a classe usuário como entidade.
+// Para evitar conflito, usa a notação Table. 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb_user") 
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	// Definindo o Id como auto incremento
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
 	
+	// Construtor
 	public User() {}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -34,7 +38,8 @@ public class User implements Serializable{
 		this.phone = phone;
 		this.password = password;
 	}
-
+	
+	// Get & Set
 	public Long getId() {
 		return id;
 	}
