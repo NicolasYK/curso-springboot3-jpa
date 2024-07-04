@@ -1,12 +1,17 @@
 package com.cursojava.curso.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // Reconhecer e definir a classe usuário como entidade.
@@ -26,6 +31,10 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	// Relacionamento da classe Order
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
 	
 	// Construtor
 	public User() {}
@@ -79,6 +88,12 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	@JsonIgnore
+	public List<Order> getOrder(){
+		return orders;
+	}
+	
 
 	@Override
 	public int hashCode() {
