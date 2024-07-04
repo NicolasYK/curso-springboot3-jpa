@@ -14,14 +14,14 @@ public class CategoryService {
 	
 	
 	@Autowired
-	private CategoryRepository repository;
+	private CategoryRepository categoryRepository;
 	
 	public List<Category> findAll(){
-		return repository.findAll();
+		return categoryRepository.findAll();
 	}
 	
 	public Category findById(Long id) {
-		Optional<Category> obj_category = repository.findById(id);
+		Optional<Category> obj_category = categoryRepository.findById(id);
 		return obj_category.get();
 	}
 }

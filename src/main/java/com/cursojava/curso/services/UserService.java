@@ -14,14 +14,14 @@ import com.cursojava.curso.repositories.UserRepository;
 public class UserService {
 	
 	@Autowired
-	private UserRepository repository;
+	private UserRepository userRepository;
 	
 	public List<User> findAll(){
-		return repository.findAll();
+		return userRepository.findAll();
 	}
 	
 	public User findById(Long id) {
-		Optional<User> obj_service = repository.findById(id);
-		return obj_service.get();
+		Optional<User> obj_user = userRepository.findById(id);
+		return obj_user.get();
 	}
 }

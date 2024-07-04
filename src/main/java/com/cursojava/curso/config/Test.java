@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.cursojava.curso.entities.Category;
 import com.cursojava.curso.entities.Order;
+import com.cursojava.curso.entities.Product;
 import com.cursojava.curso.entities.User;
 import com.cursojava.curso.entities.enums.OrderStatus;
 import com.cursojava.curso.repositories.CategoryRepository;
 import com.cursojava.curso.repositories.OrderRepository;
+import com.cursojava.curso.repositories.ProductRepository;
 import com.cursojava.curso.repositories.UserRepository;
 
 // Classe de configuração, fazendo notação para identificar e definindo o perfil.
@@ -31,10 +33,13 @@ public class Test implements CommandLineRunner{
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	// Populando o bando de dados.
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
+		// Populando o Banco de dados.
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		
@@ -46,10 +51,29 @@ public class Test implements CommandLineRunner{
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
 		
+		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+		
+		// Salvando cat e prod antes para fazer o relacionamento n - n das tabelas.
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		// Descrevendo as categorias e produtos da tabela n - n
+		p1.getCategories().add(cat2);
+		p2.getCategories().addAll(Arrays.asList(cat1, cat3));
+		p3.getCategories().add(cat3);
+		p4.getCategories().add(cat3);
+		p5.getCategories().add(cat2);
+		
 		// Salvando os dados chamando o repositório do usuário.
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
 	}
 	
 }

@@ -1,12 +1,17 @@
 package com.cursojava.curso.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +25,12 @@ public class Category implements Serializable{
 	private Long id;
 	
 	private String name;
+	
+	
+	// Fazendo muito para muitos (n - n), dando jointable de category e product
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 	
 	
 	// Construtor
@@ -47,8 +58,11 @@ public class Category implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
 	// Hashcode
 	@Override
 	public int hashCode() {
